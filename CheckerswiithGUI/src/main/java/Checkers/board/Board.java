@@ -23,7 +23,7 @@ public class Board {
     public void move(int oldX, int oldY, int newX, int newY) {
         System.out.printf("Move from old x:%d old y: %d to x:%d y:%d \n", oldX, oldY, newX, newY);
         try {
-            Move move = new Move(new Position(oldX,oldY), new Position(newX, newY));
+            Move move = new Move(new Position(oldY,oldX), new Position(newY, newX));
             me.doMove(move, this);
         } catch (Exception e) {
             System.out.println("Invalid move");

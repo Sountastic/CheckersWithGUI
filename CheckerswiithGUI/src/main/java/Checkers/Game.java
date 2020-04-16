@@ -2,21 +2,15 @@ package Checkers;
 
 import Checkers.board.Board;
 import Checkers.figure.Figure;
-import Checkers.figure.None;
 import Checkers.figure.Pawn;
-import Checkers.figure.Queen;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import static javafx.application.Application.launch;
 
 public class Game extends Application {
     private Board board = new Board();
@@ -56,10 +50,10 @@ public class Game extends Application {
             board.move(oldX, oldY, x, y);
             oldX = -1;
             oldY = -1;
-            displayOnGrid();
         }
+        displayOnGrid();
     }
-    
+
     private void displayOnGrid() {
         System.out.println("Grid cleam");
         gpane.getChildren().clear();
@@ -70,13 +64,16 @@ public class Game extends Application {
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
                 AnchorPane box = new AnchorPane();
-                final int x = col;
-                final int y = row;
+                final int x = row;
+                final int y = col;
                 box.setOnMouseClicked(event -> doMove(x, y));
 
                 Rectangle square = new Rectangle(50, 50);
                 if ((row + col) % 2 == 0) square.setFill(Color.GHOSTWHITE);
                 else square.setFill(Color.DARKSLATEGRAY);
+                if (row == oldY && col == oldX) {
+                    square.setFill(Color.RED);
+                }
                 box.getChildren().addAll(square);
 
                 Figure figure = board.getFigure(col, row);
