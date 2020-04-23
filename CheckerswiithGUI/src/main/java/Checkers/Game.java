@@ -3,6 +3,8 @@ package Checkers;
 import Checkers.board.Board;
 import Checkers.figure.Figure;
 import Checkers.figure.Pawn;
+import Checkers.figure.Queen;
+import Checkers.move.MoveExecutor;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -31,15 +33,14 @@ public class Game extends Application {
     public void start(Stage primaryStage) throws Exception {
         board = new Board();
         board.init();
+            gpane = new GridPane();
+            gpane.setPrefSize(WIDTH, HEIGHT);
+            gpane.setGridLinesVisible(true);
+            displayOnGrid();
 
-        gpane = new GridPane();
-        gpane.setPrefSize(WIDTH, HEIGHT);
-        gpane.setGridLinesVisible(true);
-        displayOnGrid();
-
-        Scene scene = new Scene(gpane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+            Scene scene = new Scene(gpane);
+            primaryStage.setScene(scene);
+            primaryStage.show();
     }
 
     public void doMove(int x, int y) {
@@ -61,15 +62,16 @@ public class Game extends Application {
         final int numCols = 8;
         final int numRows = 8;
 
-        for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < numCols; col++) {
+        for (int col = 0; col < numCols; col++) {
+            for (int row = 0; row < numRows; row++) {
                 AnchorPane box = new AnchorPane();
-                final int x = row;
-                final int y = col;
+                final int x = col;
+                final int y = row;
+
                 box.setOnMouseClicked(event -> doMove(x, y));
 
                 Rectangle square = new Rectangle(50, 50);
-                if ((row + col) % 2 == 0) square.setFill(Color.GHOSTWHITE);
+                if ((col + row) % 2 == 0) square.setFill(Color.GHOSTWHITE);
                 else square.setFill(Color.DARKSLATEGRAY);
                 if (row == oldY && col == oldX) {
                     square.setFill(Color.RED);
@@ -77,7 +79,7 @@ public class Game extends Application {
                 box.getChildren().addAll(square);
 
                 Figure figure = board.getFigure(col, row);
-                if (figure instanceof Pawn) {
+                if (figure instanceof Pawn || figure instanceof Queen) {
                     if (figure.getColor() == Figure.Color.WHITE) {
                         Circle circle = whitePiece();
                         box.getChildren().add(circle);

@@ -41,7 +41,7 @@ public class Queen extends Figure {
 
 
     private boolean isTargetEmpty(Board board, Position end) {
-        return board.getFigure(end.getRow(), end.getColumn()) instanceof None;
+        return board.getFigure(end.getColumn(), end.getRow()) instanceof None;
     }
 
     @Override

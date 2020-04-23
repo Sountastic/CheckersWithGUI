@@ -23,27 +23,27 @@ public class Board {
     public void move(int oldX, int oldY, int newX, int newY) {
         System.out.printf("Move from old x:%d old y: %d to x:%d y:%d \n", oldX, oldY, newX, newY);
         try {
-            Move move = new Move(new Position(oldY,oldX), new Position(newY, newX));
+            Move move = new Move(new Position(oldX,oldY), new Position(newX, newY));
             me.doMove(move, this);
         } catch (Exception e) {
             System.out.println("Invalid move");
         }
     }
 
-    public Figure getFigure(int row, int col) {
+    public Figure getFigure(int col, int row) {
         return rows.get(row).getCols().get(col);
     }
 
     public Figure getFigure(Position position) {
-        return getFigure(position.getRow(), position.getColumn());
+        return getFigure(position.getColumn(), position.getRow());
     }
 
-    public void setFigure(int row, int col, Figure figure) {
+    public void setFigure(int col, int row, Figure figure) {
         rows.get(row).getCols().set(col, figure);
     }
 
     public void setFigure(Position position, Figure figure) {
-        setFigure(position.getRow(), position.getColumn(), figure);
+        setFigure(position.getColumn(), position.getRow(), figure);
     }
 
     public void init() {
@@ -76,6 +76,9 @@ public class Board {
 //    }
 
     public boolean isFieldEmpty(Position position) {
-        return getFigure(position.getRow(), position.getColumn()) instanceof None;
+        return getFigure(position.getColumn(), position.getRow()) instanceof None;
     }
+
+
+
 }

@@ -23,8 +23,8 @@ public class Move {
     public List<Move> split() {
         List<Move> moves = new ArrayList<>();
 
-        int dX = endPosition.getRow() - startPosition.getRow();
-        int dY = endPosition.getColumn() - startPosition.getColumn();
+        int dX = endPosition.getColumn() - startPosition.getColumn();
+        int dY = endPosition.getRow() - startPosition.getRow();
 
         if (Math.abs(dX) != Math.abs(dY)) {
             throw new ArithmeticException("Move is not diagonal! Cannot split");
@@ -34,16 +34,14 @@ public class Move {
         int yStep = (int) Math.signum(dY);
 
         Position start = startPosition;
-        Position end;
+        Position end = endPosition;
         int newRow, newColumn;
         try {
             for (int i = 0; i < steps; i++) {
-                newRow = start.getRow() + xStep;
-                newColumn = start.getColumn() + yStep;
-                end = (new Position(newRow, newColumn));
-
+                newColumn = start.getColumn() + xStep;
+                newRow = start.getRow() + yStep;
+                end = (new Position(newColumn, newRow));
                 moves.add(new Move(start, end));
-
                 start = end;
             }
         } catch (Exception e) {
